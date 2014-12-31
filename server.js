@@ -11,9 +11,8 @@
 //governing permissions and limitations under the License.
 
 //Get modules.
-var express = require('express')(),
-	swig = require('./swig.min.js'),
-	people;
+var express = require('express')();
+var swig = require('./swig.min.js');
 var http = require('http');
 var routes = require('./routes');
 var path = require('path');
@@ -28,8 +27,8 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-app.engine('html', swig.renderFile);
-app.set('views', __dirname + '/views')
+//app.engine('html', swig.renderFile);
+//app.set('views', __dirname + '/views')
 
 
 //Read config values from a JSON file.
