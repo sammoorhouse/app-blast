@@ -27,6 +27,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
+app.use(express.static(__dirname + '/public'));
 app.use(app.router);
 
 
@@ -40,7 +41,7 @@ var db = new AWS.DynamoDB({
 });
 
 //GET home page.
-app.get('/', routes.index);
+//app.get('/', routes.index);
 
 //GET resolve
 app.get('/resolve', function(req, res) {
