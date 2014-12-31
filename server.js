@@ -49,7 +49,7 @@ app.get('/resolve', function(req, res) {
 	console.log('resolving', appIdField);
 	resolve(appIdField, function(data) {
 		console.log('got data ', data);
-		res.render('template', data)
+		res.render('template', {data: data})
 		//res.send(data)
 	});
 });
