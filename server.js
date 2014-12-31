@@ -11,61 +11,72 @@
 //governing permissions and limitations under the License.
 
 //Get modules.
-var express = require('express');
-var routes = require('./routes');
+var express = require('express')(),
+	swig = require('./swig.min.js'),
+	people;
 var http = require('http');
+var routes = require('./routes');
 var path = require('path');
 var fs = require('fs');
 var AWS = require('aws-sdk');
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'html');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
-app.locals.theme = process.env.THEME; //Make the THEME environment variable available to the app. 
+app.engine('html', swig.renderFile);
+app.set('views', __dirname + '/views')
+
 
 //Read config values from a JSON file.
 var config = fs.readFileSync('./app_config.json', 'utf8');
 config = JSON.parse(config);
 
 //Create DynamoDB client and pass in region.
-var db = new AWS.DynamoDB({region: config.AWS_REGION});
+var db = new AWS.DynamoDB({
+	region: config.AWS_REGION
+});
 
 //GET home page.
 app.get('/', routes.index);
 
-//POST signup form.
-app.post('/signup', function(req, res) {
-	var platformField = req.body.platform,
-	appIdField = req.body.appId;
-  res.send(200);
-  resolve(platformField, appIdField;
+//GET resolve
+app.get('/resolve', function(req, res) {
+	var appIdField = req.query.appId;
+	console.log('resolving', appIdField);
+	resolve(appIdField, function(data) {
+		console.log('got data ', data);
+		res.render('template', data);
+	});
 });
 
-//Add signup form data to database.
-var resolve = function (platform, appId) {
-  var formData = {
-    TableName: config.APP_TABLE,
-    Item: {
-      app_id: {'S': appId}, 
-		platform: {'S': platform}
-    }
-  };
-  db.putItem(formData, function(err, data) {
-    if (err) {
-      console.log('Error adding item to database: ', err);
-    } else {
-      console.log('Form data added to database.');
-    }
-  });
+var resolve = function(appId, cb) {
+	var params = {
+		TableName: 'apps',
+		Key: {
+			"app_id": {
+				"S": appId
+			},
+		}
+	}
+	db.getItem(params, function(err, data) {
+		console.log('sent', params)
+		if (err) {
+			console.log('Error getting data from database: ', err);
+			cb(err)
+		} else {
+			console.log('Got data:', data);
+			cb(data)
+		}
+	});
 };
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+//app.get('/add')
+
+http.createServer(app).listen(app.get('port'), function() {
+	console.log('Express server listening on port ' + app.get('port'));
 });
