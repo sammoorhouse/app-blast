@@ -48,8 +48,9 @@ app.get('/resolve', function(req, res) {
 	console.log('resolving', appIdField);
 	resolve(appIdField, function(data) {
 		console.log('got data ', data);
-		res.render('template', data);
-		res.send(data)
+		val fn = jade.compile('')
+		res.render('template', data)
+		//res.send(data)
 	});
 });
 
