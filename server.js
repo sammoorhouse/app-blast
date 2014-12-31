@@ -12,23 +12,22 @@
 
 //Get modules.
 var express = require('express');
-var swig = require('swig');
 var http = require('http');
 var routes = require('./routes');
 var path = require('path');
 var fs = require('fs');
 var AWS = require('aws-sdk');
+var jade = require('jade')
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
-app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-//app.engine('html', swig.renderFile);
-//app.set('views', __dirname + '/views')
 
 
 //Read config values from a JSON file.
@@ -49,7 +48,7 @@ app.get('/resolve', function(req, res) {
 	console.log('resolving', appIdField);
 	resolve(appIdField, function(data) {
 		console.log('got data ', data);
-		//res.render('template', data);
+		res.render('template', data);
 		res.send(data)
 	});
 });
