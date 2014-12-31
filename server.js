@@ -12,7 +12,7 @@
 
 //Get modules.
 var express = require('express')();
-var swig = require('./swig.min.js');
+//var swig = require('./swig.min.js');
 var http = require('http');
 var routes = require('./routes');
 var path = require('path');
