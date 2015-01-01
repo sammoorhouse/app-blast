@@ -2,7 +2,7 @@
 
 function detect(data){
 	document.write(JSON.stringify(data));
-	var os = platform.os;
+	var os = platform.os.family;
 	document.write(os)
 	if(os.lastIndexOf('iOS', 0) === 0){
 		document.write(data.Item.itunes.S)
