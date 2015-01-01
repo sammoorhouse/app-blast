@@ -1,13 +1,13 @@
 
 
 function detect(data){
-	document.write(data);
+	document.write(JSON.stringify(data));
 	var os = platform.os;
-	
-	if(os.startsWith('iOS')){
+	document.write(os)
+	if(os.lastIndexOf('iOS', 0) === 0){
 		document.write(data.Item.itunes.S)
 	}
-	else if(os.startsWith('Android')){
+	else if(os.lastIndexOf('Android', 0) === 0){
 		document.write(data.Item.google_play.S)
 	}
 	else{
