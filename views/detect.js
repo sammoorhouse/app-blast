@@ -14,3 +14,5 @@ function detect(data){
 		document.write(os)
 	}
 }
+
+
