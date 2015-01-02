@@ -7,7 +7,7 @@ function detect(data){
     * "Windows XP", "OS X", "Ubuntu", "Debian", "Fedora", "Red Hat", "SuSE",
     * "Android", "iOS" and "Windows Phone"
 	*/
-	if((os.lastIndexOf('iOS', 0) === 0) && (typeof(data.Item.itunes) != undef){
+	if((os.lastIndexOf('iOS', 0) === 0) && (typeof(data.Item.itunes) != undef)){
 		window.location.replace('https://itunes.apple.com/app/' + data.Item.itunes.S);
 	}
 	else if((os.lastIndexOf('Android', 0) === 0) && (typeof(data.Item.google_play) != undef)){
