@@ -11,9 +11,7 @@ function detect(data){
 		window.location.replace('https://itunes.apple.com/app/' + data.Item.itunes.S);
 		}
 	else if((os.lastIndexOf('Android', 0) === 0) && (typeof(data.Item.google_play) != undef)){
-		var uri = 'https://play.google.com/store/apps/details?id=' + data.Item.google_play.S
-		//document.write(uri);
-		window.location.replace(uri);
+		window.location.replace('https://play.google.com/store/apps/details?id=' + data.Item.google_play.S);
 	}
 	else{
 		window.location.replace('/');
