@@ -1,6 +1,6 @@
 
 function detect(data){
-	var unded = "undefined";
+	var undef = "undefined";
 	var os = platform.os.family;
     /* Common values include:
     * "Windows", "Windows Server 2008 R2 / 7", "Windows Server 2008 / Vista",
@@ -11,7 +11,9 @@ function detect(data){
 		window.location.replace('https://itunes.apple.com/app/' + data.Item.itunes.S);
 	}
 	else if((os.lastIndexOf('Android', 0) === 0) && (typeof(data.Item.google_play) != undef)){
-		window.location.replace('https://play.google.com/store/apps/details?id=' + data.Item.google_play.S);
+		var uri = 'https://play.google.com/store/apps/details?id=' + data.Item.google_play.S
+		console.write(uri);
+		//window.location.replace(uri);
 	}
 	else{
 		window.location.replace('/');
