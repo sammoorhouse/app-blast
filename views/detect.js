@@ -10,14 +10,12 @@ function detect(data){
 	if((os.lastIndexOf('iOS', 0) === 0) && (typeof(data.Item.itunes) != undef)){
 		window.location.replace('https://itunes.apple.com/app/' + data.Item.itunes.S);
 		}
-	/*else if((os.lastIndexOf('Android', 0) === 0) && (typeof(data.Item.google_play) != undef)){
+	else if((os.lastIndexOf('Android', 0) === 0) && (typeof(data.Item.google_play) != undef)){
 		var uri = 'https://play.google.com/store/apps/details?id=' + data.Item.google_play.S
 		console.write(uri);
 		//window.location.replace(uri);
-	}*/
+	}
 	else{
-		document.write(os)
-		document.write(typeof(data.Item.google_play))
-		//window.location.replace('/');
+		window.location.replace('/');
 	}
 }
