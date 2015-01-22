@@ -12,13 +12,10 @@ function detect(data){
 		}
 	else if((os.lastIndexOf('Android', 0) === 0) && (typeof(data.Item.google_play) != undef)){
 		var uri = 'https://play.google.com/store/apps/details?id=' + data.Item.google_play.S
-		document.write(uri);
-		//window.location.replace(uri);
+		//document.write(uri);
+		window.location.replace(uri);
 	}
 	else{
-		document.writeln(os.lastIndexOf('Android', 0))
-		document.writeln(typeof(data.Item.google_play))
-		document.writeln(undef)
-		//window.location.replace('/');
+		window.location.replace('/');
 	}
 }
