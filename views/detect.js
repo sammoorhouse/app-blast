@@ -16,8 +16,8 @@ function detect(data){
 		//window.location.replace(uri);
 	}*/
 	else{
-		console.write(os)
-		console.write(typeof(data.Item.google_play))
+		document.write(os)
+		document.write(typeof(data.Item.google_play))
 		//window.location.replace('/');
 	}
 }
