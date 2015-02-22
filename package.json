@@ -8,6 +8,7 @@
   "dependencies": {
     "aws-sdk": "*",
     "express": "~4.0.0",
+	"express-logger": "*",
     "jade": "^1.8.2",
     "ejs" : "~0.8.5",
     "mongoose" : "~3.8.1",
