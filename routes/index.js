@@ -35,7 +35,7 @@ var FACEBOOK_USER = {
   verified: false
 };
 var userLoggedIn = false;
-var cognitoidentity = new AWS.CognitoIdentity();`
+var cognitoidentity = new AWS.CognitoIdentity();
 
 router.use(passport.initialize());
 router.use(passport.session());
