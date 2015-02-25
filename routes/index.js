@@ -37,8 +37,8 @@ var FACEBOOK_USER = {
 var userLoggedIn = false;
 var cognitoidentity = new AWS.CognitoIdentity();
 
-router.use(passport.initialize());
-router.use(passport.session());
+exports.use(passport.initialize());
+exports.use(passport.session());
 
 passport.use(new FacebookStrategy({
   clientID: FACEBOOK_APP_ID,
@@ -63,21 +63,21 @@ passport.deserializeUser(function(obj, done) {
 });
 
 /* GET Facebook page. */
-router.get('/auth/facebook', passport.authenticate('facebook'));
+exports.get('/auth/facebook', passport.authenticate('facebook'));
 
 /* GET Facebook callback page. */
-router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+exports.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/success',
   failureRedirect: '/error'
 }));
 
 /* GET Facebook success page. */
-router.get('/success', function(req, res, next) {
+exports.get('/success', function(req, res, next) {
   console.log('FACEBOOK_TOKEN:'.green + FACEBOOK_TOKEN); 
   res.send('Logged in as ' + FACEBOOK_USER.name + ' (id:' + FACEBOOK_USER.id + ').');
 });
 
 /* GET Facebook error page. */
-router.get('/error', function(req, res, next) {
+exports.get('/error', function(req, res, next) {
   res.send("Unable to access Facebook servers. Please check internet connection or try again later.");
 });
