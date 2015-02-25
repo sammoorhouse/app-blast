@@ -56,6 +56,8 @@ passport.use(new FacebookStrategy({
   });
 }));
 
+/*
+
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -64,24 +66,24 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-/* GET Facebook page. */
+// GET Facebook page.
 router.get('/auth/facebook', passport.authenticate('facebook'));
 
-/* GET Facebook callback page. */
+// GET Facebook callback page.
 router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/success',
   failureRedirect: '/error'
 }));
 
-/* GET Facebook success page. */
+// GET Facebook success page.
 router.get('/success', function(req, res, next) {
   console.log('FACEBOOK_TOKEN:'.green + FACEBOOK_TOKEN); 
   res.send('Logged in as ' + FACEBOOK_USER.name + ' (id:' + FACEBOOK_USER.id + ').');
 });
 
-/* GET Facebook error page. */
+// GET Facebook error page. 
 router.get('/error', function(req, res, next) {
   res.send("Unable to access Facebook servers. Please check internet connection or try again later.");
 });
-
+*/
 module.exports = router;
