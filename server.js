@@ -1,42 +1,45 @@
 //Get modules.
 var express = require('express');
-var http = require('http');
-var routes = require('./routes');
-var path = require('path');
-var fs = require('fs');
-var AWS = require('aws-sdk');
-var jade = require('jade')
+//var http = require('http');
+//var path = require('path');
+//var fs = require('fs');
+//var AWS = require('aws-sdk');
+//var jade = require('jade')
+
+var routes = require('./routes/index');
+
 var app = express();
 
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.static(__dirname + '/public'));
+//app.set('port', process.env.PORT || 3000);
+//app.set('views', path.join(__dirname, '/views'));
+//app.set('view engine', 'jade');
+
+//GET home page.
+app.use('/', routes);
+
+//app.use(express.logger('dev'));
+//app.use(express.bodyParser());
+//app.use(express.methodOverride());
+//app.use(express.static(path.join(__dirname, '/public')));
 
 
 //Read config values from a JSON file.
-var config = fs.readFileSync('./app_config.json', 'utf8');
-config = JSON.parse(config);
+//var config = fs.readFileSync('./app_config.json', 'utf8');
+//config = JSON.parse(config);
 
 //Create DynamoDB client and pass in region.
-var db = new AWS.DynamoDB({
+/*var db = new AWS.DynamoDB({
 	region: config.AWS_REGION
-});
+});*/
 
-//GET home page.
-//app.get('/', routes.index);
 
 //GET resolve
-app.get('/resolve', function(req, res) {
+/*app.get('/resolve', function(req, res) {
 	var appIdField = req.query.appId;
 	console.log('resolving', appIdField);
 	resolve(appIdField, function(data) {
 		console.log('got data ', data);
 		res.render('template', {data: data})
-		//res.send(data)
 	});
 });
 
@@ -59,7 +62,7 @@ var resolve = function(appId, cb) {
 			cb(data)
 		}
 	});
-};
+};*/
 
 http.createServer(app).listen(app.get('port'), function() {
 	console.log('Express server listening on port ' + app.get('port'));
