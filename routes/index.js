@@ -3,7 +3,7 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { appTitle: 'A New Startup: Sign Up Today!'});
+  res.render('index');
 };
 
 var passport = require('passport');
@@ -83,3 +83,5 @@ router.get('/success', function(req, res, next) {
 router.get('/error', function(req, res, next) {
   res.send("Unable to access Facebook servers. Please check internet connection or try again later.");
 });
+
+module.exports = router;
