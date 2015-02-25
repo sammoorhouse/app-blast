@@ -1,17 +1,17 @@
+var express = require('express');
+var router = express.Router();
+
 /*
  * GET home page.
  */
-
-exports.index = function(req, res){
+router.get('/', (function(req, res){
   res.render('index');
-};
+});
 
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var AWS = require('aws-sdk');
 var colors = require('colors');
-var express = require('express');
-var router = express.Router();
 
 var AWS_ACCOUNT_ID = '134264806612';
 var AWS_Region = 'us-east-1';
