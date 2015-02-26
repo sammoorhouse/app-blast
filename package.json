@@ -18,7 +18,7 @@
     "passport-twitter" : "~1.0.2",
     "passport-google-oauth" : "~0.1.5",
 	"uid2" : "0.0.3",
-	"oauth" : "0.1.6",
+	"oauth" : "0.9.12",
     "connect-flash" : "~0.1.1",
     "bcrypt-nodejs" : "latest",
     "colors" : "*",
