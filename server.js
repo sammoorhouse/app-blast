@@ -1,6 +1,4 @@
 //Get modules.
-var agent = require('webkit-devtools-agent')
-
 var express = require('express');
 var http = require('http');
 var path = require('path');
