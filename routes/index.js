@@ -36,6 +36,7 @@ var cognitoidentity = new AWS.CognitoIdentity();
 
 app.use(passport.initialize());
 app.use(passport.session());
+console.log('initialised facebook session');
 
 passport.use(new FacebookStrategy({
   clientID: FACEBOOK_APP_ID,
@@ -51,8 +52,6 @@ passport.use(new FacebookStrategy({
   });
 }));
 
-
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -60,6 +59,8 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
+
+console.log(passport);
 
 // GET Facebook page.
 app.get('/auth/facebook', passport.authenticate('facebook'));
