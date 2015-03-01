@@ -1,6 +1,8 @@
 
+var express = require('express');
 
-/*
+var app = express();
+
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var AWS = require('aws-sdk');
@@ -32,8 +34,8 @@ var FACEBOOK_USER = {
 var userLoggedIn = false;
 var cognitoidentity = new AWS.CognitoIdentity();
 
-router.use(passport.initialize());
-router.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(new FacebookStrategy({
   clientID: FACEBOOK_APP_ID,
@@ -49,7 +51,7 @@ passport.use(new FacebookStrategy({
   });
 }));
 
-/*
+
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -60,23 +62,23 @@ passport.deserializeUser(function(obj, done) {
 });
 
 // GET Facebook page.
-router.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook'));
 
 // GET Facebook callback page.
-router.get('/auth/facebook/callback', passport.authenticate('facebook', {
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/success',
   failureRedirect: '/error'
 }));
 
 // GET Facebook success page.
-router.get('/success', function(req, res, next) {
+app.get('/success', function(req, res, next) {
   console.log('FACEBOOK_TOKEN:'.green + FACEBOOK_TOKEN); 
   res.send('Logged in as ' + FACEBOOK_USER.name + ' (id:' + FACEBOOK_USER.id + ').');
 });
 
 // GET Facebook error page. 
-router.get('/error', function(req, res, next) {
+app.get('/error', function(req, res, next) {
   res.send("Unable to access Facebook servers. Please check internet connection or try again later.");
 });
-*/
-module.exports = router;
+
+module.exports = app;

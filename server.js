@@ -11,14 +11,12 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'jade');
 
-//GET home page.
-//app.use('/', routes);
+require('./routes/index')
 
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, '/public')));
-
 
 //Read config values from a JSON file.
 var config = fs.readFileSync('./app_config.json', 'utf8');
