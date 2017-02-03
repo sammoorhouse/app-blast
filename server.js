@@ -16,13 +16,6 @@ var config = {
 };
 
 var connection = new Connection(config);
-connection.on('connect', function (err) {
-	if (err) {
-		console.log(err)
-	} else {
-		console.log("connected to db")
-	}
-});
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
@@ -78,6 +71,14 @@ app.get('/res/:id', (req, res) => {
 	console.log('done')
 })
 
-http.createServer(app).listen(app.get('port'), function () {
-	console.log('Express server listening on port ' + app.get('port'));
+connection.on('connect', function (err) {
+	if (err) {
+		console.log(err)
+	} else {
+		console.log("connected to db")
+		http.createServer(app).listen(app.get('port'), function () {
+			console.log('Express server listening on port ' + app.get('port'));
+		});
+	}
 });
+
