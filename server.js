@@ -70,8 +70,8 @@ app.get('/res/:id', (req, res) => {
 
 	insert.addParameter('timestamp', TYPES.DateTime, new Date());
 	insert.addParameter('appId', TYPES.Int, id);
-	insert.addParameter('ip', TYPES.Int, ip);
-	insert.addParameter('os', TYPES.Int, ua);
+	insert.addParameter('ip', TYPES.VarChar, ip);
+	insert.addParameter('os', TYPES.VarChar, ua);
 
 
 	connection.execSql(insert);
