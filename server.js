@@ -1,20 +1,77 @@
-//Get modules.
 var express = require('express');
 var http = require('http');
-var path = require('path');
-//var jade = require('jade')
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
+
+var config = {
+	userName: 'samjmoorhousegmail',
+	password: 'hJ^YE2gR09^64Lha',
+	server: 'app-blast-dev.database.windows.net',
+	options: {
+		encrypt: true,
+		database: 'app-blast-dev',
+		useColumnNames: true
+	}
+};
+
+var connection = new Connection(config);
+connection.on('connect', function (err) {
+	if (err) {
+		console.log(err)
+	} else {
+		console.log("connected to db")
+	}
+});
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
 
-app.get('/res/:id', (req, res)=>{
-//get datas
+app.get('/res/:id', (req, res) => {
+	var id = req.params.id
 
-//redirect
+	var ua = req.headers['user-agent'],
+		$ = {};
 
-window.location.replace('https://play.google.com/store/apps/details?id=12345);
+
+
+	var query = "INSERT INTO reqs(timestamp, appId) VALUES ( @timestamp , @appId)";
+
+	var insert = new Request(query, function (err) {
+		if (err) {
+			console.log(err);
+		}else{
+			request = new Request("SELECT a.appId, a.googlePlayStoreId, a.appleStoreId, a.windowsStoreId FROM apps AS a where appId = " + id, function (err, rowCount) {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log(rowCount + ' rows');
+				}
+			});
+
+			request.on('row', function (columns) {
+				if (/like Mac OS X/.test(ua)) {
+					res.redirect('https://itunes.apple.com/us/app/' + columns.appleStoreId.value)
+				} else if (/Android/.test(ua)) {
+					res.redirect('https://play.google.com/store/apps/details?id=' + columns.googlePlayStoreId.value)
+				} else {
+					res.redirect('https://itunes.apple.com/us/app/' + columns.appleStoreId.value)
+				}
+			});
+
+
+			connection.execSql(request);
+		}
+	});
+
+	insert.addParameter('timestamp', TYPES.DateTime, new Date());
+	insert.addParameter('appId', TYPES.Int, id);
+
+
+	connection.execSql(insert);
+	console.log('done')
 })
 
-http.createServer(app).listen(app.get('port'), function() {
+http.createServer(app).listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
 });
