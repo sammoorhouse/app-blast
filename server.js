@@ -29,13 +29,17 @@ app.set('port', process.env.PORT || 3000);
 
 app.get('/res/:id', (req, res) => {
 	var id = req.params.id
+	var ip = req.headers['x-forwarded-for'] || 
+     req.connection.remoteAddress || 
+     req.socket.remoteAddress ||
+     req.connection.socket.remoteAddress;
 
 	var ua = req.headers['user-agent'],
 		$ = {};
 
 
 
-	var query = "INSERT INTO reqs(timestamp, appId) VALUES ( @timestamp , @appId)";
+	var query = "INSERT INTO reqs(timestamp, appId, ip, os) VALUES ( @timestamp , @appId, @ip, @os)";
 
 	var insert = new Request(query, function (err) {
 		if (err) {
@@ -66,6 +70,8 @@ app.get('/res/:id', (req, res) => {
 
 	insert.addParameter('timestamp', TYPES.DateTime, new Date());
 	insert.addParameter('appId', TYPES.Int, id);
+	insert.addParameter('ip', TYPES.Int, ip);
+	insert.addParameter('os', TYPES.Int, ua);
 
 
 	connection.execSql(insert);
