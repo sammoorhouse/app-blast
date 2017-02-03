@@ -71,7 +71,7 @@ app.get('/res/:id', (req, res) => {
 	insert.addParameter('timestamp', TYPES.DateTime, new Date());
 	insert.addParameter('appId', TYPES.Int, id);
 	insert.addParameter('ip', TYPES.VarChar, ip);
-	insert.addParameter('os', TYPES.VarChar, ua);
+	insert.addParameter('os', TYPES.VarChar, ua.substring(0,50));
 
 
 	connection.execSql(insert);
