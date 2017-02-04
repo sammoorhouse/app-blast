@@ -1,3 +1,10 @@
+var env = process.env.NODE_ENV || 'dev';
+
+console.log('loading .env')
+require('dotenv').config({
+silent: true
+});
+
 var express = require('express');
 var http = require('http');
 var Connection = require('tedious').Connection;
@@ -5,12 +12,12 @@ var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
 
 var config = {
-	userName: 'samjmoorhousegmail',
-	password: 'hJ^YE2gR09^64Lha',
-	server: 'app-blast-dev.database.windows.net',
+	userName: process.env.database_username,
+	password: process.env.database_password,
+	server: process.env.database_hostname,
 	options: {
 		encrypt: true,
-		database: 'app-blast-dev',
+		database: process.env.database_name,
 		useColumnNames: true
 	}
 };

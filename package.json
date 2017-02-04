@@ -6,6 +6,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "dotenv": "^4.0.0",
     "express": "3.4.0",
     "tedious": "^1.14.0"
   }
