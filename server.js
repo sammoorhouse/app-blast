@@ -28,14 +28,14 @@ var connection = new Connection(config);
 var app = express();
 app.set('port', process.env.PORT || 3000);
 
-app.get('/res/:id', (req, res) => {
+app.get('/res/:id/:campaign', (req, res) => {
 	var id = req.params.id
+	var campaign = req.params.campaign || 0
 	var ip = req.headers['x-forwarded-for'] ||
 		req.connection.remoteAddress ||
 		req.socket.remoteAddress ||
 		req.connection.socket.remoteAddress
 	var ua = req.headers['user-agent']
-	var campaign = req.params.campaign || 0
 
 	request = new Request("SELECT a.appId, a.googlePlayStoreId, a.appleStoreId, a.windowsStoreId FROM apps AS a where appId = " + id,
 		function (err, rowCount) {
