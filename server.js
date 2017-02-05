@@ -18,7 +18,8 @@ var config = {
 	options: {
 		encrypt: true,
 		database: process.env.database_name,
-		useColumnNames: true
+		useColumnNames: true,
+		connectionTimeout: 10000
 	}
 };
 
@@ -34,6 +35,7 @@ app.get('/res/:id', (req, res) => {
 		req.socket.remoteAddress ||
 		req.connection.socket.remoteAddress
 	var ua = req.headers['user-agent']
+	var campaign = req.params.campaign || 0
 
 	request = new Request("SELECT a.appId, a.googlePlayStoreId, a.appleStoreId, a.windowsStoreId FROM apps AS a where appId = " + id,
 		function (err, rowCount) {
@@ -43,7 +45,7 @@ app.get('/res/:id', (req, res) => {
 			} else {
 				//log?
 				//perform insert
-				var query = "INSERT INTO reqs(timestamp, appId, ip, os) VALUES ( @timestamp , @appId, @ip, @os)";
+				var query = "INSERT INTO reqs(timestamp, appId, ip, os, campaign) VALUES ( @timestamp , @appId, @ip, @os, @campaign)";
 
 				var insert = new Request(query, function (err) {
 					if (err) {
@@ -57,6 +59,7 @@ app.get('/res/:id', (req, res) => {
 				insert.addParameter('appId', TYPES.Int, id);
 				insert.addParameter('ip', TYPES.VarChar, ip);
 				insert.addParameter('os', TYPES.VarChar, ua.substring(0, process.env.os_column_length));
+				insert.addParameter('campaign', TYPES.Int, campaign);
 
 				connection.execSql(insert);
 			}
