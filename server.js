@@ -88,4 +88,8 @@ connection.on('connect', function (err) {
 			console.log('Express server listening on port ' + app.get('port'));
 		});
 	}
-});
+})
+
+connection.on('error', function(err){
+	console.log('ignoring ' + err)
+})
