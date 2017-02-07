@@ -27,9 +27,10 @@ var connection = new Connection(config);
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
+app.use('/', express.static('public/'));
 
 app.get('/res/:id/:campaign', (req, res) => {
-	var id = req.params.id
+	var id = req.params.id || 0
 	var campaign = req.params.campaign || 0
 	var ip = req.headers['x-forwarded-for'] ||
 		req.connection.remoteAddress ||
