@@ -1,4 +1,3 @@
-fuck
 
 var env = process.env.NODE_ENV || 'dev';
 
