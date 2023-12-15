@@ -1,3 +1,5 @@
+fuck
+
 var env = process.env.NODE_ENV || 'dev';
 
 console.log('loading .env')
